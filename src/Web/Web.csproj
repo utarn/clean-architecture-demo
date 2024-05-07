@@ -54,6 +54,10 @@
     <_ContentIncludedByDefault Remove="Views\_ViewStart.cshtml" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Endpoints\Users.cs" />
+  </ItemGroup>
+
 
   <!-- Auto-generated Open API specification and Angular TypeScript clients -->
   <PropertyGroup>

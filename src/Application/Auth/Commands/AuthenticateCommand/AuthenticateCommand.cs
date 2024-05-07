@@ -37,19 +37,23 @@ public class AuthenticateCommand : IRequest<AccessToken>
             {
                 ApplicationUser? appUser = await _userManager.FindByEmailAsync(request.Username);
                 JwtSecurityTokenHandler tokenHandler = new();
-                byte[] secretKey = Encoding.UTF8.GetBytes("THIS IS MY SECRET");
+                byte[] secretKey = Encoding.UTF8.GetBytes("2bb80d537b1da3e38bd30361aa855686bde0eacd7162fef6a25fe97bf527a25b");
 
                 if (appUser?.UserName != null)
                 {
                     List<Claim> identityProperty = new()
                     {
                         new Claim(ClaimTypes.NameIdentifier, appUser.Id),
-                        new Claim(ClaimTypes.Name, appUser.UserName)
+                        new Claim(ClaimTypes.Name, appUser.UserName),
+                        new Claim(ClaimTypes.Email, appUser.Email),
                     };
                     identityProperty.AddRange(await _userManager.GetClaimsAsync(appUser));
 
                     // TODO ADD MORE POLICIES OR ROLES
-                    
+                    // foreach (var policy in Policies.Claims)
+                    // {
+                    //     identityProperty.Add(new Claim(policy.Key, "true"));
+                    // }
                     
                     SecurityTokenDescriptor tokenDescription = new()
                     {

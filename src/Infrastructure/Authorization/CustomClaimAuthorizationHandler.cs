@@ -26,25 +26,36 @@ public class CustomClaimAuthorizationHandler : AuthorizationHandler<CustomClaimR
             return;
         }
 
-        // switch (requirement.ClaimType)
-        // {
-        //     case SystemClaim.RmHead:
-        //         var isRmHead =
-        //             await _context.UserInHeadPositions.AnyAsync(h => h.Email == _currentUserService.Email);
-        //         if (isRmHead)
-        //         {
-        //             context.Succeed(requirement);
-        //         }
-        //
-        //         return;
-        //     default:
-        //         var userClaims = await _claimService.GetClaimsAsync(_currentUserService.UserId);
-        //         if (userClaims.Any(c => c.Type == requirement.ClaimType))
-        //         {
-        //             context.Succeed(requirement);
-        //         }
-        //
-        //         return;
-        // }
+        var userClaims = await _claimService.GetClaimsAsync(_user.Id);
+        if (userClaims.Any(c => c.Type == requirement.ClaimType))
+        {
+            context.Succeed(requirement);
+        }
+
+        return;
+        /*
+        switch (requirement.ClaimType)
+        {
+            case SystemClaim.RmHead:
+                var isRmHead =
+                    await _context.UserInHeadPositions.AnyAsync(h => h.Email == _currentUserService.Email);
+                if (isRmHead)
+                {
+                    context.Succeed(requirement);
+                }
+
+                break;
+            default:
+                var userClaims = await _claimService.GetClaimsAsync(_currentUserService.UserId);
+                if (userClaims.Any(c => c.Type == requirement.ClaimType))
+                {
+                    context.Succeed(requirement);
+                }
+
+                break;
+        }
+
+        context.Fail();
+    */
     }
 }
